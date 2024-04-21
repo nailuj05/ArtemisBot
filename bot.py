@@ -1,3 +1,4 @@
+import sys
 import time
 import argparse
 import subprocess
@@ -12,10 +13,10 @@ from selenium.webdriver.common.by import By
 
 # ----------- ARGS -------------
 def parse_arguments():
-    parser = argparse.ArgumentParser(description='Process command line arguments')
+    parser = argparse.ArgumentParser(description='Artemis Commit Bot Help')
     parser.add_argument('repo_path', type=str, help='Path to the repository (locally)')
     parser.add_argument('artemis_url', type=str, help='URL of the Artemis server')
-    parser.add_argument('-p', '--percentage', type=int, default=100, help='Desired percentage (default: 100%)')
+    parser.add_argument('-p', '--percentage', type=int, default=100, help='Desired percentage (default: 100)')
     return parser.parse_args()
 
 args = parse_arguments()
