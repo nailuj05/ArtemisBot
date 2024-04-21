@@ -1,2 +1,4 @@
 # Ignore the config ini to avoid accidentally pushing your credentials
-config.ini
+*.ini
+*.tmp
+*.log
