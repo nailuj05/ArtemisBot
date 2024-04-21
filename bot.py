@@ -1,5 +1,6 @@
-import configparser
+import time
 import argparse
+import configparser
 from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.keys import Keys
@@ -41,7 +42,10 @@ def CreateWebDriver(browser):
 driver = CreateWebDriver(browser)
 
 # Open Artemis for Login
-driver.get('https://artemis.cit.tum.de')
+driver.get(args.artemis_url)
+
+wait = WebDriverWait(driver, 10)
+wait.until(lambda driver: driver.current_url != "https://artemis.ase.in.tum.de")
 
 username = driver.find_element(By.ID, 'username')
 username.send_keys(config["Auth"]["Username"])
@@ -58,12 +62,40 @@ login.click()
 # Wait for the page to load (you may need to adjust the wait time)
 driver.implicitly_wait(1000)
 
-# Print the page title
 print(driver.title)
 
+# Wait for redirect back to exercise page
+wait = WebDriverWait(driver, 10)
+wait.until_not(lambda driver: driver.title == "Welcome to Artemis")
+
+def main_loop():
+    while(True):
+        try:
+            result_score = driver.find_element(By.ID, "result-score")
+            percentage = result_score.find_element(By.TAG_NAME, "span")
+            p = int(percentage.text.replace("%", ""))
+
+            if(p >= int(args.percentage)):
+                print(f"Target percentage reached!")
+                break
+            
+            # Git push here
+
+        finally:
+            # sleep and wait
+            time.sleep(5)
+
+try:
+    main_loop()
+finally:
+    driver.close()
+
+
+'''
 # Close the browser
 while True:
     key = input("Press a key (q to quit): ")
     if key.lower() == 'q':
         driver.quit()
         break
+'''
