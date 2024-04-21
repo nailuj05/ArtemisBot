@@ -9,7 +9,7 @@ It does this by simulating a browser to log into Artemis and read the current pe
 ## Requirements
 
 - [Python (3.12)](https://www.python.org)
-- [Selenium](https://selenium-python.readthedocs.io/installation.html)
+- [Selenium (for python)](https://selenium-python.readthedocs.io/installation.html)
 - Browser (Firefox/Chrome/Safari)
 - [Selenium driver for your browser](https://selenium-python.readthedocs.io/installation.html#drivers)
 
