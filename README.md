@@ -4,10 +4,10 @@ This bot is created to automatically commit and push to Artemis until a desired 
 
 ## Requirements
 
-- (Python)[www.python.org]
-- (Selenium)[https://selenium-python.readthedocs.io/installation.html]
+- [Python](https://www.python.org)
+- [Selenium](https://selenium-python.readthedocs.io/installation.html)
 - Browser (Firefox/Chrome/Safari)
-- (Selenium driver for your browser)[https://selenium-python.readthedocs.io/installation.html#drivers]
+- [Selenium driver for your browser](https://selenium-python.readthedocs.io/installation.html#drivers)
 
 ## Setup
 
