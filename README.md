@@ -1,6 +1,8 @@
 # Artemis Commit Bot
 
-This bot is created to automatically push empty commits to Artemis until a desired percentage is achieved. It does this by simulating a browser to log into Artemis and read the current percentage. Pushes occure at most only every 10s (if Artemis finished compiling by then) to avoid overloading the server/putting to many build tasks in the queue. 
+This bot is created to automatically push empty commits to Artemis until a desired percentage is achieved. Meant for performance testing exercises that are pure server luck. If your code is not sufficiently optimized this will not help you.
+
+It does this by simulating a browser to log into Artemis and read the current percentage. Pushes occure at most only every 10s (if Artemis finished compiling by then) to avoid overloading the server/putting to many build tasks in the queue. 
 
 This should run on all supported browsers and operating systems, I only tested on Linux and Firefox though.
 
