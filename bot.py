@@ -1,19 +1,41 @@
+import configparser
+
 from selenium import webdriver
+from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
-# Path to the WebDriver executable (e.g., chromedriver)
-webdriver_path = '/home/julian/.cargo/bin/geckodriver'
+config = configparser.ConfigParser()
+config.read("config.ini")
 
-# Initialize the WebDriver (in this example, using Chrome)
-driver = webdriver.Firefox()
+print(f"Login: {config["Auth"]["Username"]}")
 
-# Open a website
-driver.get('https://artemis.cit.tum.de/courses/329/exercises/13369')
+webdriver_path = config["Browser"]["PathToDriver"]
 
-# Find an element by its ID and type text into an input field
-input_element = driver.find_element(By.ID, 'search')
-input_element.send_keys('BOTTED')
+browser = config["Browser"]["Browser"]
+
+def CreateWebDriver(browser):
+    if(browser == "Chrome"):
+        return webdriver.Chrome()
+    elif(browser == "Firefox"):
+        return webdriver.Firefox()
+    elif(browser == "Safari"):
+        return webdriver.Safari()
+    else:
+        raise ValueError("Unsupported Browser Name")
+
+driver = CreateWebDriver(browser)
+
+# Open Artemis for Login
+driver.get('https://artemis.cit.tum.de')
+
+username = driver.find_element(By.ID, 'username')
+username.send_keys(config["Auth"]["Username"])
+
+password = driver.find_element(By.ID, 'password')
+password.send_keys(config["Auth"]["Password"])
 
 # Submit the form
 # input_element.send_keys(Keys.ENTER)
@@ -29,3 +51,4 @@ while True:
     key = input("Press a key (q to quit): ")
     if key.lower() == 'q':
         driver.quit()
+        break
