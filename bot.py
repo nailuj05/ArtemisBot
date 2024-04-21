@@ -19,56 +19,57 @@ def parse_arguments():
     parser.add_argument('-p', '--percentage', type=int, default=100, help='Desired percentage (default: 100)')
     return parser.parse_args()
 
-args = parse_arguments()
-
 # ---------- CONFIG ------------
 
-config = configparser.ConfigParser()
-config.read("config.ini")
+def load_config():
+    config = configparser.ConfigParser()
+    config.read("config.ini")
 
-print(f"Login: {config["Auth"]["Username"]}")
+    print(f"Login: {config["Auth"]["Username"]}")
 
-webdriver_path = config["Browser"]["PathToDriver"]
+    return config
 
-browser = config["Browser"]["Browser"]
+def create_driver(config):
+    browser = config["Browser"]["Browser"]
 
-def CreateWebDriver(browser):
-    if browser == "Chrome":
-        return webdriver.Chrome()
-    elif browser == "Firefox":
-        return webdriver.Firefox()
-    elif browser == "Safari":
-        return webdriver.Safari()
-    else:
-        raise ValueError("Unsupported Browser Name")
+    def CreateWebDriver(browser):
+        if browser == "Chrome":
+            return webdriver.Chrome()
+        elif browser == "Firefox":
+            return webdriver.Firefox()
+        elif browser == "Safari":
+            return webdriver.Safari()
+        else:
+            raise ValueError("Unsupported Browser Name")
 
-driver = CreateWebDriver(browser)
+    return CreateWebDriver(browser)
 
 # ----------- ARTEMIS LOGIN -----------
-driver.get(args.artemis_url)
+def login_artemis(args, config, driver):
+    driver.get(args.artemis_url)
 
-wait = WebDriverWait(driver, 20)
-wait.until(lambda driver: driver.current_url != "https://artemis.ase.in.tum.de")
+    wait = WebDriverWait(driver, 20)
+    wait.until(lambda driver: driver.current_url != "https://artemis.ase.in.tum.de")
 
-username = driver.find_element(By.ID, 'username')
-username.send_keys(config["Auth"]["Username"])
+    username = driver.find_element(By.ID, 'username')
+    username.send_keys(config["Auth"]["Username"])
 
-password = driver.find_element(By.ID, 'password')
-password.send_keys(config["Auth"]["Password"])
+    password = driver.find_element(By.ID, 'password')
+    password.send_keys(config["Auth"]["Password"])
 
-remember = driver.find_element(By.ID, "rememberMe")
-remember.click()
+    remember = driver.find_element(By.ID, "rememberMe")
+    remember.click()
 
-login = driver.find_element(By.ID, "login-button")
-login.click()
+    login = driver.find_element(By.ID, "login-button")
+    login.click()
 
-driver.implicitly_wait(1000)
+    driver.implicitly_wait(1000)
 
-print(driver.title)
+    # print(driver.title)
 
-# Wait for redirect back to exercise page
-wait = WebDriverWait(driver, 20)
-wait.until_not(lambda driver: driver.title == "Welcome to Artemis")
+    # Wait for redirect back to exercise page
+    wait = WebDriverWait(driver, 20)
+    wait.until_not(lambda driver: driver.title == "Welcome to Artemis")
 
 # -----------------------------------------------------------
 
@@ -131,6 +132,11 @@ def main_loop(remote_url):
 
 
 # ------------ MAIN LOOP ------------------
+
+args = parse_arguments()
+config = load_config()
+driver = create_driver(config)
+login_artemis(args, config, driver)
 
 remote_url = get_remote_url()
 print(f"Remote URL: {remote_url}")

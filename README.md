@@ -22,7 +22,6 @@ Password=...
 
 [Browser]
 Browser=Firefox/Chrome/Safari
-PathToDriver=Path to your Selenium driver installation
 ```
 
 ## Usage
