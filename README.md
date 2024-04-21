@@ -4,7 +4,7 @@ This bot is created to automatically push empty commits to Artemis until a desir
 
 It does this by simulating a browser to log into Artemis and read the current percentage. Pushes occure at most only every 10s (if Artemis finished compiling by then) to avoid overloading the server/putting to many build tasks in the queue. 
 
-This should run on all supported browsers and operating systems, I only tested on Linux and Firefox though.
+*This should run on all supported browsers and operating systems, I only tested on Linux and Firefox though.*
 
 ## Requirements
 
@@ -51,3 +51,7 @@ options:
   -p PERCENTAGE, --percentage PERCENTAGE
                         Desired percentage (default: 100)
 ```
+
+## Contact
+
+For any concerns you can contact me here.
