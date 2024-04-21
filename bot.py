@@ -9,20 +9,23 @@ webdriver_path = '/home/julian/.cargo/bin/geckodriver'
 driver = webdriver.Firefox()
 
 # Open a website
-driver.get('https://fill.dev/form/login-simple')
+driver.get('https://artemis.cit.tum.de/courses/329/exercises/13369')
 
 # Find an element by its ID and type text into an input field
-input_element = driver.find_element(By.ID, 'username')
-input_element.send_keys('Python')
+input_element = driver.find_element(By.ID, 'search')
+input_element.send_keys('BOTTED')
 
 # Submit the form
-input_element.send_keys(Keys.ENTER)
+# input_element.send_keys(Keys.ENTER)
 
 # Wait for the page to load (you may need to adjust the wait time)
-driver.implicitly_wait(10)
+driver.implicitly_wait(1000)
 
 # Print the page title
 print(driver.title)
 
 # Close the browser
-driver.quit()
+while True:
+    key = input("Press a key (q to quit): ")
+    if key.lower() == 'q':
+        driver.quit()
