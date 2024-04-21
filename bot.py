@@ -50,6 +50,7 @@ def login_artemis(args, config, driver):
 
     wait = WebDriverWait(driver, 20)
     wait.until(lambda driver: driver.current_url != "https://artemis.ase.in.tum.de")
+    wait.until(EC.presence_of_element_located((By.ID, 'username')))
 
     username = driver.find_element(By.ID, 'username')
     username.send_keys(config["Auth"]["Username"])
